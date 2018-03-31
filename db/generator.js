@@ -7,9 +7,9 @@ const getSentence = () => {
 const getPlayer = () => {
   return faker.internet.userName();
 };
-const getTime = () => {
-  let num = String(faker.random.number(99));
-  num += `.${faker.random.number(99)}`
+const getScore = () => {
+  let num = String(faker.random.number({min:1, max:60}));
+  num += `.${faker.random.number({min:1, max:99})}`
   return num;
 
 };
@@ -17,7 +17,7 @@ const getTime = () => {
 //create 1000 sentences, 100 users, and 10000 times
 let sentences = '';
 for (let i = 1; i <= 1000; i++) {
-  sentences += `${i}, ${getSentence()}\n`
+  sentences += `${getSentence()}\n`
 }
 fs.writeFile('./db/sentences.csv', sentences, (err) => {
   if (err) throw err;
@@ -26,18 +26,17 @@ fs.writeFile('./db/sentences.csv', sentences, (err) => {
 
 let players = '';
 for (let i = 1; i <= 100; i++) {
-  players += `${i}, ${getPlayer()}\n`
+  players += `${getPlayer()}\n`
 }
 fs.writeFile('./db/players.csv', players, (err) => {
   if (err) throw err;
   console.log('Players complete!');
 });
-
-let times = '';
+let scores = '';
 for (let i = 1; i <= 10000; i++) {
-  times += `${getTime()}, ${i % 100}, ${i % 1000}\n`
+  scores += `${getScore()},${faker.random.number({min:1, max:100})},${faker.random.number({min:1, max:1000})}\n`
 }
-fs.writeFile('./db/times.csv', times, (err) => {
+fs.writeFile('./db/scores.csv', scores, (err) => {
   if (err) throw err;
-  console.log('Times complete!');
+  console.log('Scores complete!');
 });
