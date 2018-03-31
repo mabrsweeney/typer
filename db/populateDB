@@ -1,0 +1,5 @@
+mysql -uroot < /Users/matthewsweeney/typer/db/tables.sql
+
+mysqlimport -uroot typer /Users/matthewsweeney/typer/db/players.csv
+mysqlimport -uroot typer /Users/matthewsweeney/typer/db/sentences.csv
+mysqlimport -uroot typer /Users/matthewsweeney/typer/db/times.csv
