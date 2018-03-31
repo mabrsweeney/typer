@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import Complete from './Complete';
+import axios from 'axios';
 
 export default class Timer extends React.Component {
   constructor(props) {
@@ -7,9 +8,11 @@ export default class Timer extends React.Component {
     this.state = {
       elapsed: 0,
       running: false,
-      start: this.props.start
+      start: this.props.start,
+      done: false
     }
     this.tick = this.tick.bind(this);
+    this.postScore = this.postScore.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -17,8 +20,20 @@ export default class Timer extends React.Component {
       this.startTimer();
     }
     if (nextProps.done) {
+      this.setState({done: true})
       clearInterval(this.timer);
     }
+  }
+
+  postScore(name) {    
+    var elapsed = Math.round(this.state.elapsed / 100);
+    var seconds = (elapsed / 10).toFixed(1);    
+    axios.post('/challenge/time', {
+      score: seconds,
+      player_name: name,
+      sent_id: this.props.sid
+    }).then( response => console.log('Success!'))
+    .catch( error => console.log('Error!'));
   }
 
   tick() {
@@ -35,6 +50,11 @@ export default class Timer extends React.Component {
   render() {
     var elapsed = Math.round(this.state.elapsed / 100);
     var seconds = (elapsed / 10).toFixed(1);    
-    return (<div>{seconds}</div>);
+    return (
+      <div>
+        <div>{seconds}</div>
+        <Complete done={this.state.done} postScore={this.postScore}/>
+      </div>
+    );
   }
 }
