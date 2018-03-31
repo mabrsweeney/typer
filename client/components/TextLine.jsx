@@ -1,17 +1,19 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import Timer from './Timer';
+import Scores from './Scores';
+
 export default class TextLine extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       correct: '',
       incorrect: 0,
-      next: this.props.text.substr(1),
+      next: this.props.textHighscores[0].sentence,
       complete: '',
       ready: false,
       typeCount: 0,
-      done: false
+      done: false,
+      time: 0
     }
     this.checkLetter = this.checkLetter.bind(this);
   }
@@ -22,6 +24,7 @@ export default class TextLine extends React.Component {
       TL.checkLetter(event.key);
     });
   }
+
 
   checkLetter(key) {
     if (key === this.state.next[0] ) {
@@ -60,8 +63,8 @@ export default class TextLine extends React.Component {
           <pre className="tl next">{this.state.next}</pre>
         </div>
         <p> Mistakes: {this.state.incorrect}</p>
-        <Timer start={Date.now()} ready={this.state.ready} done={this.state.done}/>
-        <div>{this.state.complete}</div>
+        <Timer sid={this.props.textHighscores[0].id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime}/>
+        <Scores scores={this.props.textHighscores} />
       </div>
     );
   }
