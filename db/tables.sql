@@ -2,14 +2,18 @@ CREATE DATABASE IF NOT EXISTS typer;
 
 USE typer;
 
-CREATE TABLE IF NOT EXISTS sentences (id INT PRIMARY KEY, sentence VARCHAR(200));
+DROP TABLE IF EXISTS scores;
+DROP TABLE IF EXISTS sentences;
+DROP TABLE IF EXISTS players;
 
-CREATE TABLE IF NOT EXISTS players (id INT PRIMARY KEY, name VARCHAR(50));
+CREATE TABLE sentences (id INT PRIMARY KEY AUTO_INCREMENT, sentence VARCHAR(200));
 
-CREATE TABLE  times (
-  time VARCHAR(7), 
+CREATE TABLE players (id INT PRIMARY KEY AUTO_INCREMENT, player_name VARCHAR(50) UNIQUE);
+
+CREATE TABLE scores (
+  score VARCHAR(6), 
   pid INT, 
-  sid INT, 
-  FOREIGN KEY (sid) REFERENCES sentences(id), 
+  sent_id INT, 
+  FOREIGN KEY (sent_id) REFERENCES sentences(id), 
   FOREIGN KEY (pid) REFERENCES players(id)
 );

@@ -1,5 +1,5 @@
-mysql -uroot < /Users/matthewsweeney/typer/db/tables.sql
+mysql -uroot --local-infile < /Users/matthewsweeney/typer/db/tables.sql
 
-mysqlimport -uroot typer /Users/matthewsweeney/typer/db/players.csv
-mysqlimport -uroot typer /Users/matthewsweeney/typer/db/sentences.csv
-mysqlimport -uroot typer /Users/matthewsweeney/typer/db/times.csv
+node /Users/matthewsweeney/typer/db/generator.js
+
+mysql -uroot --local-infile < /Users/matthewsweeney/typer/db/pop.js
