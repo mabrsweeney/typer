@@ -2,6 +2,7 @@ import React from 'react';
 import Timer from './Timer';
 import Scores from './Scores';
 import Header from './Header';
+import $ from 'jquery';
 
 export default class TextLine extends React.Component {
   constructor(props) {
@@ -14,12 +15,23 @@ export default class TextLine extends React.Component {
       ready: false,
       typeCount: 0,
       done: false,
-      time: 0
+      time: 0,
     }
     this.checkLetter = this.checkLetter.bind(this);
   }
 
   componentDidMount() {
+
+    //Set background color based on difficulty of challenge
+    const difficulty = this.props.textHighscores[0].difficulty;
+    if (difficulty >= 30) {
+      $('body').addClass('hardbg');
+    } else if (difficulty < 30 && difficulty >= 20){
+      $('body').addClass('mediumbg');
+    } else {
+      $('body').addClass('easybg');
+    }
+
     const TL = this;
     document.body.addEventListener('keyup', function(event) {
       TL.checkLetter(event.key);
@@ -59,7 +71,7 @@ export default class TextLine extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header difficulty={this.props.textHighscores[0].difficulty}/>
         <div className="text-line-container" >
           <div className="text-area">
             <pre className="tl correct">{this.state.correct}</pre>
