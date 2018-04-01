@@ -51,7 +51,7 @@ export default class Timer extends React.Component {
     var elapsed = Math.round(this.state.elapsed / 100);
     var seconds = (elapsed / 10).toFixed(1);    
     return (
-      <div>
+      <div className="timer">
         <div>{seconds}</div>
         <Complete done={this.state.done} postScore={this.postScore}/>
       </div>
