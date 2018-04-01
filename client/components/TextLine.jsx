@@ -1,6 +1,7 @@
 import React from 'react';
 import Timer from './Timer';
 import Scores from './Scores';
+import Header from './Header';
 
 export default class TextLine extends React.Component {
   constructor(props) {
@@ -57,14 +58,17 @@ export default class TextLine extends React.Component {
 
   render() {
     return (
-      <div className="text-line-container" >
-        <div className="text-area">
-          <pre className="tl correct">{this.state.correct}</pre>
-          <pre className="tl next">{this.state.next}</pre>
+      <div>
+        <Header />
+        <div className="text-line-container" >
+          <div className="text-area">
+            <pre className="tl correct">{this.state.correct}</pre>
+            <pre className="tl next">{this.state.next}</pre>
+          </div>
+          <p> Mistakes: {this.state.incorrect}</p>
+          <Timer sid={this.props.textHighscores[0].id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime}/>
+          <Scores className="scores" scores={this.props.textHighscores} />
         </div>
-        <p> Mistakes: {this.state.incorrect}</p>
-        <Timer sid={this.props.textHighscores[0].id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime}/>
-        <Scores scores={this.props.textHighscores} />
       </div>
     );
   }
