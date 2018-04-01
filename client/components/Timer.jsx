@@ -28,7 +28,7 @@ export default class Timer extends React.Component {
   postScore(name) {    
     var elapsed = Math.round(this.state.elapsed / 100);
     var seconds = (elapsed / 10).toFixed(1);    
-    axios.post('/challenge/time', {
+    axios.post('/submit/time', {
       score: seconds,
       player_name: name,
       sent_id: this.props.sid
