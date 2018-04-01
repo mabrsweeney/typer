@@ -38,5 +38,17 @@ const insertTime = (score, callback) => {
   })
 }
 
+const insertSentence = (sentence, callback) => {
+  connection.query(`INSERT INTO sentences (sentence, num_attempts, difficulty) VALUES ("${sentence}", 0, 0);`, (err) => {
+    console.log(err);
+    if (err){
+     callback(err);
+    } else {
+      callback(null);
+    } 
+  })
+}
+
 module.exports.selectSentence = selectSentence;
 module.exports.insertTime = insertTime;
+module.exports.insertSentence = insertSentence;
