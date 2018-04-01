@@ -1,7 +1,6 @@
-html, body{
+body, html{
   margin: 0px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background: linear-gradient(#2196F3, #E3F2FD);
   height: 100%;
 }
 
@@ -11,9 +10,8 @@ html, body{
   align-items: center;
   width:100%;
   height:120px;
-  background: #0D47A1;
   color: #E3F2FD;
-  text-shadow: 2px 2px #1565C0;
+  text-shadow: 2px 2px #616161;
   padding: 10px;
 }
 
@@ -23,6 +21,8 @@ html, body{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: #E3F2FD;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .link-button :hover{
@@ -44,7 +44,7 @@ html, body{
   font-size: 40px;
   color: #E3F2FD;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  text-shadow: 2px 2px #1565C0;
+  text-shadow: 2px 2px #616161;
 }
 
 .timer {
@@ -88,4 +88,30 @@ tr:nth-child(even) {
   flex-direction: row;
   justify-content: center;
   width: 700px;
+}
+
+
+/****** BG-COLOR DIFFICULTY CLASSES ******/
+
+.easybg {
+  background: linear-gradient(#4CAF50, #E8F5E9);
+}
+
+.hardbg {
+  background: linear-gradient(#F44336, #FFEBEE);
+}
+
+.mediumbg {
+  background: linear-gradient(#FFC107, #FFFDE7);
+}
+
+
+.easy-header {
+  background: #1B5E20;
+}
+.medium-header {
+  background: #F57F17;
+}
+.hard-header {
+  background: #BF360C;
 }
