@@ -6,11 +6,12 @@ import $ from 'jquery';
 
 export default class TextLine extends React.Component {
   constructor(props) {
+     console.log(props);
     super(props);
     this.state = {
       correct: '',
       incorrect: 0,
-      next: this.props.textHighscores[0].sentence,
+      next: this.props.textHighscores.sentence,
       complete: '',
       ready: false,
       typeCount: 0,
@@ -23,7 +24,7 @@ export default class TextLine extends React.Component {
   componentDidMount() {
 
     //Set background color based on difficulty of challenge
-    const difficulty = this.props.textHighscores[0].difficulty;
+    const difficulty = this.props.textHighscores.difficulty;
     if (difficulty >= 30) {
       $('body').addClass('hardbg');
     } else if (difficulty < 30 && difficulty >= 20){
@@ -71,15 +72,15 @@ export default class TextLine extends React.Component {
   render() {
     return (
       <div>
-        <Header difficulty={this.props.textHighscores[0].difficulty}/>
+        <Header difficulty={this.props.textHighscores.difficulty}/>
         <div className="text-line-container" >
           <div className="text-area">
             <pre className="tl correct">{this.state.correct}</pre>
             <pre className="tl next">{this.state.next}</pre>
           </div>
           <p> Mistakes: {this.state.incorrect}</p>
-          <Timer sid={this.props.textHighscores[0].id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime}/>
-          <Scores className="scores" scores={this.props.textHighscores} />
+          <Timer sid={this.props.textHighscores.sent_id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime}/>
+          <Scores className="scores" scores={this.props.textHighscores.scores} />
         </div>
       </div>
     );

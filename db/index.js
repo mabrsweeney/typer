@@ -7,15 +7,30 @@ const connection = mysql.createConnection({
   database : 'typer'
 })
 
-//select s.sentence, t.time, p.name from sentences as s join times as t on t.sid=s.id join players as p on p.id=t.pid where p.id=8;
+// SELECT id, sentence, difficulty, num_attempts FROM sentences WHERE id=${id};
+// SELECT s.score, p.player_name FROM scores AS s JOIN players AS p ON s.pid=p.id WHERE s.sent_id=${id} ORDER BY CAST(sc.score AS unsigned) LIMIT 10;
 const selectSentence = (id, callback) => {
+  let challenge = {};
   connection.query(
-    `SELECT s.id, s.sentence, s.difficulty, sc.score, p.player_name FROM sentences AS s JOIN scores AS sc ON sc.sent_id=s.id JOIN players AS p ON p.id=sc.pid WHERE s.id=${id} ORDER BY CAST(sc.score AS unsigned) LIMIT 10;`, 
+    `SELECT id, sentence, difficulty, num_attempts FROM sentences WHERE id=${id}; `, 
     (err, results, fields) => {
     if(err) {
       callback(err, null);
     } else {
-      callback(null, results);
+      challenge.sent_id = results[0].id;
+      challenge.sentence = results[0].sentence;
+      challenge.difficulty = results[0].difficulty;
+      challenge.num_attempts = results[0].num_attempts;
+      challenge.scores = [];
+      connection.query(`SELECT s.score, p.player_name FROM scores AS s JOIN players AS p ON s.pid=p.id WHERE s.sent_id=${id} ORDER BY CAST(s.score AS unsigned) LIMIT 10;`,
+      (scerr, scores, fields) => {
+        if (scerr) {
+            callback(null, challenge);
+          } else {
+            challenge.scores = scores;
+            callback(null, challenge);
+          }
+        });
     }
   });
 };
