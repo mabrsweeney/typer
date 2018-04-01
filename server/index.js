@@ -21,8 +21,18 @@ app.get('/challenge/:id/sentence', (req, res) => {
   })
 });
 
-app.post('/challenge/time', (req, res) => {
+app.post('/submit/time', (req, res) => {
   db.insertTime(req.body, err => {
+    if (err) {
+      res.sendStatus(502)
+    } else {
+      res.sendStatus(201);
+    }
+  });
+});
+
+app.post('/submit/challenge', (req, res) => {
+  db.insertSentence(req.body.challenge, err => {
     if (err) {
       res.sendStatus(502)
     } else {
