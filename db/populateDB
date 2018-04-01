@@ -3,3 +3,5 @@ mysql -uroot --local-infile < /Users/matthewsweeney/typer/db/tables.sql
 node /Users/matthewsweeney/typer/db/generator.js
 
 mysql -uroot --local-infile < /Users/matthewsweeney/typer/db/pop.js
+
+mysql -uroot --local-infile typer< /Users/matthewsweeney/typer/db/updateWeights.sql
