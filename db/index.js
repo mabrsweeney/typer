@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 //select s.sentence, t.time, p.name from sentences as s join times as t on t.sid=s.id join players as p on p.id=t.pid where p.id=8;
 const selectSentence = (id, callback) => {
   connection.query(
-    `SELECT s.id, s.sentence, sc.score, p.player_name FROM sentences AS s JOIN scores AS sc ON sc.sent_id=s.id JOIN players AS p ON p.id=sc.pid WHERE s.id=${id} ORDER BY CAST(sc.score AS unsigned) LIMIT 10;`, 
+    `SELECT s.id, s.sentence, s.difficulty, sc.score, p.player_name FROM sentences AS s JOIN scores AS sc ON sc.sent_id=s.id JOIN players AS p ON p.id=sc.pid WHERE s.id=${id} ORDER BY CAST(sc.score AS unsigned) LIMIT 10;`, 
     (err, results, fields) => {
     if(err) {
       callback(err, null);
