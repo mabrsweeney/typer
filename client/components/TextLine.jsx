@@ -6,7 +6,6 @@ import Header from './Header';
 
 export default class TextLine extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       correct: '',
@@ -39,7 +38,6 @@ export default class TextLine extends React.Component {
   }
 
   checkLetter(key) {
-    console.log(this.state.done);
     if (key === this.state.next[0]) {
       const addition = this.state.next[0];
       const count = this.state.typeCount + 1;
