@@ -22,7 +22,7 @@ const Header = props => (
   <div className={`header ${setBG(props.difficulty)}`}>
     <h1 className="title">Typer Challenge</h1>
     <button className="link-button" onClick={submitChallenge}>Create A Challenge</button>
-    <a className="link-button" href={`http://localhost:3000/challenge/${Math.floor(Math.random() * 1000)}`}>Random Challenge</a>
+    <a className="link-button" href={`http://${window.location.href.split('/')[2]}/challenge/${Math.floor(Math.random() * 1000)}`}>Random Challenge</a>
   </div>);
 
 export default Header;
