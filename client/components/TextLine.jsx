@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import axios from 'axios';
 import Timer from './Timer';
 import Scores from './Scores';
 import Header from './Header';
@@ -10,11 +11,13 @@ export default class TextLine extends React.Component {
     this.state = {
       correct: '',
       incorrect: 0,
-      next: this.props.textHighscores.sentence,
+      next: '',
       ready: false,
       typeCount: 0,
       done: false,
-      time: 0,
+      sent_id: 0,
+      scores: [],
+      difficulty: 0,
     };
     this.checkLetter = this.checkLetter.bind(this);
     this.checkListener = this.checkListener.bind(this);
@@ -22,15 +25,29 @@ export default class TextLine extends React.Component {
 
   componentDidMount() {
     // Set background color based on difficulty of challenge
-    const { difficulty } = this.props.textHighscores;
-    if (difficulty >= 30) {
+    const TL = this;
+    axios.get(`/challenge/${window.location.href.split('/')[4]}/sentence`)
+      .then((response) => {
+        console.log(response);
+        const { data } = response;
+        const { difficulty } = data;
+        TL.setState({
+          next: data.sentence,
+          difficulty: data.difficulty,
+          sent_id: data.sent_id,
+          scores: data.scores,
+        });
+
+
+        window.addEventListener('keyup', TL.checkListener);
+      }).catch((err) => { console.log(err); });
+    if (this.state.difficulty >= 30) {
       $('body').addClass('hardbg');
-    } else if (difficulty < 30 && difficulty >= 20) {
+    } else if (this.state.difficulty < 30 && this.state.difficulty >= 20) {
       $('body').addClass('mediumbg');
     } else {
       $('body').addClass('easybg');
     }
-    window.addEventListener('keyup', this.checkListener);
   }
 
   checkListener(event) {
@@ -68,15 +85,23 @@ export default class TextLine extends React.Component {
   render() {
     return (
       <div>
-        <Header difficulty={this.props.textHighscores.difficulty} />
+        <Header difficulty={this.state.difficulty} />
         <div className="text-line-container" >
           <div className="text-area">
             <pre className="tl correct">{this.state.correct}</pre>
             <pre className="tl next">{this.state.next}</pre>
           </div>
-          <p> Mistakes: {this.state.incorrect}</p>
-          <Timer sid={this.props.textHighscores.sent_id} start={Date.now()} ready={this.state.ready} done={this.state.done} saveTime={this.saveTime} />
-          <Scores className="scores" scores={this.props.textHighscores.scores} />
+          <div className="info-container">
+            <p> Mistakes: {this.state.incorrect}</p>
+            <Timer
+              sid={this.state.sent_id}
+              start={Date.now()}
+              ready={this.state.ready}
+              done={this.state.done}
+              saveTime={this.saveTime}
+            />
+          </div>
+          <Scores className="scores" scores={this.state.scores} />
         </div>
       </div>
     );
