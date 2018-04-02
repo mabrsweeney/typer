@@ -37,17 +37,15 @@ export default class TextLine extends React.Component {
           sent_id: data.sent_id,
           scores: data.scores,
         });
-
-
+        if (this.state.difficulty >= 30) {
+          $('body').addClass('hardbg');
+        } else if (this.state.difficulty < 30 && this.state.difficulty >= 20) {
+          $('body').addClass('mediumbg');
+        } else {
+          $('body').addClass('easybg');
+        }
         window.addEventListener('keyup', TL.checkListener);
       }).catch((err) => { console.log(err); });
-    if (this.state.difficulty >= 30) {
-      $('body').addClass('hardbg');
-    } else if (this.state.difficulty < 30 && this.state.difficulty >= 20) {
-      $('body').addClass('mediumbg');
-    } else {
-      $('body').addClass('easybg');
-    }
   }
 
   checkListener(event) {
