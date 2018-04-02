@@ -18,6 +18,7 @@ const selectSentence = (id, callback) => {
       if (err) {
         callback(err, null);
       } else {
+        if (results.length === 0) return;
         challenge.sent_id = results[0].id;
         challenge.sentence = results[0].sentence;
         challenge.difficulty = results[0].difficulty;

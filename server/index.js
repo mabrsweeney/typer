@@ -16,15 +16,18 @@ app.get('/', (req, res) => {
 
 app.get('/challenge/:id/sentence', (req, res) => {
   db.selectSentence(req.params.id, (err, result) => {
-    if (err) res.sendStatus(501);
-    res.send(result);
-  })
+    if (err) {
+      res.sendStatus(501);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
 app.post('/submit/time', (req, res) => {
-  db.insertTime(req.body, err => {
+  db.insertTime(req.body, (err) => {
     if (err) {
-      res.sendStatus(502)
+      res.sendStatus(502);
     } else {
       res.sendStatus(201);
     }
@@ -32,9 +35,9 @@ app.post('/submit/time', (req, res) => {
 });
 
 app.post('/submit/challenge', (req, res) => {
-  db.insertSentence(req.body.challenge, err => {
+  db.insertSentence(req.body.challenge, (err) => {
     if (err) {
-      res.sendStatus(502)
+      res.sendStatus(502);
     } else {
       res.sendStatus(201);
     }
@@ -44,3 +47,4 @@ app.post('/submit/challenge', (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on localhost:${port}...`);
 })
+;
