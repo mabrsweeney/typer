@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Submit from './Submit';
 export default class Complete extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +24,10 @@ export default class Complete extends React.Component {
     }
   }
 
+  displaySubmit() {
+    return this.state.submitted ? 'Score Submitted!' : '';
+  }
+
   render() {
     if (this.props.done) {
       return (
@@ -33,6 +37,7 @@ export default class Complete extends React.Component {
             <input type="text" name="name" placeholder="Enter Player Name..." onChange={e => this.updateName(e)} />
             <input type="submit" />
           </form>
+          <Submit submitted={this.state.submitted} />
         </div>);
     }
     return null;
